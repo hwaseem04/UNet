@@ -10,7 +10,7 @@
 - Faster than earlier methods (prior to 2015)
 
 ## What I infer from Figure 1
-![U Net Architecture](Architecture.png)
+![U Net Architecture](/images/Architecture.png)
 - There exist several blocks - where 2 convolution operation done then either downscaling(halving height and width,then doubling channel) or upscaling operation( doubling height and width, halving channel at the same time)
     <!-- - But there is a difference in the way channel size is upscaled and downscaled.
     - In contraction, while maxpooling channel size remain same. Filter size then increased to change channel size.
@@ -27,7 +27,7 @@
         - Since valid padding is used in this paper, the size of feature map decreases but even when upsampling *it didnt have exact size of input*, hence output mask doesn't completely represent input image. So, the missed out border pixels are mirrored(Extrapolated) so that now even with reduced output mask they are also included. 
 
 ## What I infer from Figure 2
-![Overlap tile strategy](Overlap-tile-strategy.png)
+![Overlap tile strategy](Overlap-tile-/images/strategy.png)
 - First image is input image, which has higher dimension (height, width) compared to output mapping.
 - Second image is output to be overlapped with input image for segmenting.
 - The whole pixels inside blue box is needed for segmenting the pixels in yellow box.
@@ -38,7 +38,7 @@
     - Optimal tile size need to be selected. Overlapping regions in output should be carefully dealt with.
 
 ## What I infer from Figure 3
-![Segmented results](fig3.png)
+![Segmented results](/images/fig3.png)
 - a. Raw image
 - b. Ground truth image for training
 - c. Trained output mask, which when overlayed on input image gives the segmentation 
@@ -122,10 +122,10 @@
 - Trained for **10 hours** in Nvidia Titan GPU(6 GB)
 
 - Results for task 1. 
-![task 1](Exp1.png)
+![task 1](/images/Exp1.png)
 
 - Results for task 2 and 3 with IoU
-![task 2 and 3](Exp2_3.png)
+![task 2 and 3](/images/Exp2_3.png)
 
 ## Other Reading List
 - [ ] What did *Krizhevsky et al* done as a break through ? (Mentioned in Introduction)
