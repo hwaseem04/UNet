@@ -52,7 +52,7 @@ class ExpansionBlock(nn.Module):
 
         # Concatenation. Input in PyTorch manipulation is usually of (Batch, Channel, Height, Width). 
         # We need to concatenate along channels. hence axis=1
-        print(x1.shape, x2.shape)
+        ## print(x1.shape, x2.shape)
         try:
             x = torch.cat([x2,x1], axis=1) # x2,x1 and not as x1,x2 because following it the simlar way of original paper.
         except:
