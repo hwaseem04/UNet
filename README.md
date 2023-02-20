@@ -1,7 +1,16 @@
-# U-Net Notes
+# Contents
+- [Implementation Details](##Implementation-Details)
+- [U-Net Notes](##U-Net-Notes)
 
+## Implementation Details
+- Most details from the paper are followed.
+- Few things to be notes. Unlike the original paper, following changes are made
+    - Dropout layer at final layer not included
+    - Same padding used, hence center cropping from contractive path to upsampled feature map not needed
+    - BatchNorm layers used after each convolution operation.
 
-## Abstract
+## U-Net Notes
+### Abstract
 - To use the available annotated samples more efficiently to train neural network for segmentation.
 - [ ] Initial contraction (Shrinking of image) - to capture context. How?
 - [ ] Symmetrical Expansion (of image) - for localisation. How?
@@ -9,7 +18,7 @@
     - [ ] Look how sliding window segmentation implemented.
 - Faster than earlier methods (prior to 2015)
 
-## What I infer from Figure 1
+### What I infer from Figure 1
 ![U Net Architecture](/images/Architecture.png)
 - There exist several blocks - where 2 convolution operation done then either downscaling(halving height and width,then doubling channel) or upscaling operation( doubling height and width, halving channel at the same time)
     <!-- - But there is a difference in the way channel size is upscaled and downscaled.
@@ -26,7 +35,7 @@
         - Refer figure 2. "Missing input data is extrapolated by mirroring" 
         - Since valid padding is used in this paper, the size of feature map decreases but even when upsampling *it didnt have exact size of input*, hence output mask doesn't completely represent input image. So, the missed out border pixels are mirrored(Extrapolated) so that now even with reduced output mask they are also included. 
 
-## What I infer from Figure 2
+### What I infer from Figure 2
 ![Overlap tile strategy](/images/Overlap-tile-strategy.png)
 - First image is input image, which has higher dimension (height, width) compared to output mapping.
 - Second image is output to be overlapped with input image for segmenting.
@@ -37,7 +46,7 @@
     - It is like sliding window strategy where large images (whose dimension doesn't fit the model's input dimension) are divided into fixed size overlapping windows/patches. And each patch is used one by one by the model.
     - Optimal tile size need to be selected. Overlapping regions in output should be carefully dealt with.
 
-## What I infer from Figure 3
+### What I infer from Figure 3
 ![Segmented results](/images/fig3.png)
 - a. Raw image
 - b. Ground truth image for training
@@ -46,7 +55,7 @@
 - d. Image of Proposed weight loss method that gives more preference to the bakcground seperating two borders. Dark red represents more weight to thin border. Dark blue represents less weight.
 
 
-## Introduction
+### Introduction
 - (Existing Problem 1) - Success of CNN is limited to availabilty if training sets and the size of network. Thousands of training images are usually beyond the reach in biomedical tasks.
     - (Existing Solution 1) - Ciresan et al trained sliding window model with small multiple patches of same image. Localises(Can determine that in this particular pixel dimension there is this class etc) as well as gets to have multiple training data.
 - (Existing Problem 1.2) - Ciresan et al's method is very slow. Network to run on each patch and Redundant overlapping patches. Tradeoff (localisation accuracy vs context  tradeoff - refer Reading list)
@@ -62,7 +71,7 @@
     - Having Large feature channels even after upscaling in each block enhances passage of contextual information to higher resolution layers.
 
 
-## Network Architecture
+### Network Architecture
 - **Left side** (Downsampling/Contracting path)
     - Typical CNN Architecture
     - 3 by 3 convolution of feature maps. Unpadded - so valid padding(Size of feature map decreases)
@@ -86,7 +95,7 @@
     - 4 **while** upsampling
     - 8+1 = 9 **after** upsampling
 
-## Training
+### Training
 - Stochastic Gradient used with Caffe.
 > Remember: less the batch size, slower it takes to converge. But possibly reach a good minima with slow updation.
 -  Here batch size is taken as 1 to reduce computational overhead. The authors favour **large input tiles** 
@@ -103,7 +112,7 @@
         - [ ] Understand the intuition
 - [ ] How is the weight map used in training?
     
-## Data Augmentation
+### Data Augmentation
 - Performed to improve invariance(Model predicting proper resuts even after change in orientation, scaling, lighting of input image) and robustness(Accurate results even in presence of noisy or corrupted data).
 - Specific to the application domain. Here biological cells based invariance and robustness is given importance needed. 
     - Invariance & variance to : shift, rotation,  deformations and gray value variations(change in intensity or brightness).
@@ -111,7 +120,7 @@
         - [ ] Read again about how it is done.
 - [ ] How does **Dropout layers** at end of contracting path perform implicit data augmentation?
 
-## Experiments
+### Experiments
 - Experimented with three types of segmentation tasks
     1. segmentation of neuronal structures(30, 512 by 512 images).
     1. segmentation of Glioblastoma-astrocytoma U373 cells (35 partially annotated data).
@@ -127,7 +136,7 @@
 - Results for task 2 and 3 with IoU
 ![task 2 and 3](/images/Exp2_3.png)
 
-## Other Reading List
+### Other Reading List
 - [ ] What did *Krizhevsky et al* done as a break through ? (Mentioned in Introduction)
 - Trade-off in  contribution of *Ciresan et al* 
     - [x] Why does using max pooling on larger patches  affects localization accuracy? *(Before, read about spatial resolution)*
