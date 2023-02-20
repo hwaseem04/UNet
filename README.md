@@ -70,7 +70,7 @@
     - Then 2 by 2 Max pooling with stride 2 - downsampling step.
     - Feature channels are doubled after downsampling step   
 - **Right side** (Upsampling/Expanding path)
-    - First upscaled (somehow done and seems like channel dim maintained) then 2 by 2 convolution done (up convolution, which halved feature channels dim). (But usually on convolution x,y size changes and channel size depends on filters used)?
+    - First upscaled (somehow done and seems like channel dim maintained) then 2 by 2 convolution done (up convolution, which halved feature channels dim). (But usually on convolution x,y size changes and channel size depends on filters used)
         - [x] How does `up convolution` decrease channel width? 
             - `Up convolution` in original U Net paper is done with `transposed convolution`. 
             - It is similar to normal convolution but in reverse, thats all. So like increasing/deacreasing number of filters in usual convolution increases/decreases channel depth, the same happens here.
