@@ -27,7 +27,7 @@
         - Since valid padding is used in this paper, the size of feature map decreases but even when upsampling *it didnt have exact size of input*, hence output mask doesn't completely represent input image. So, the missed out border pixels are mirrored(Extrapolated) so that now even with reduced output mask they are also included. 
 
 ## What I infer from Figure 2
-![Overlap tile strategy](Overlap-tile-/images/strategy.png)
+![Overlap tile strategy](/images/Overlap-tile-strategy.png)
 - First image is input image, which has higher dimension (height, width) compared to output mapping.
 - Second image is output to be overlapped with input image for segmenting.
 - The whole pixels inside blue box is needed for segmenting the pixels in yellow box.
