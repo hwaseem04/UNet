@@ -97,7 +97,7 @@
 
 ### Training
 - Stochastic Gradient used with Caffe.
-> Remember: less the batch size, slower it takes to converge. But possibly reach a good minima with slow updation.
+> Remember: less the batch size, fluctuates a lot (hence can possibly get out of local minima). But possibly can't even reach a good minima. Can't be vectorised hence very slow!
 -  Here batch size is taken as 1 to reduce computational overhead. The authors favour **large input tiles** 
     - [ ] (Why computer overhead reduced and why large input tile preferred?)
 - High momentum (0.99) used,
